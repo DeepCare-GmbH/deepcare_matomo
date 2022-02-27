@@ -83,7 +83,7 @@ class MatomoTracker {
   String? currentScreenId;
 
   bool initialized = false;
-  bool? _optout = false;
+  bool? _optOut = false;
 
   SharedPreferences? _prefs;
 
@@ -166,9 +166,9 @@ class MatomoTracker {
     }
 
     if (_prefs!.containsKey(kOptOut)) {
-      _optout = _prefs!.getBool(kOptOut);
+      _optOut = _prefs!.getBool(kOptOut);
     } else {
-      _prefs!.setBool(kOptOut, _optout!);
+      _prefs!.setBool(kOptOut, _optOut!);
     }
 
     log.fine(
@@ -180,11 +180,11 @@ class MatomoTracker {
     });
   }
 
-  bool? get optOut => _optout;
+  bool? get optOut => _optOut;
 
-  void setOptOut(bool optout) {
-    _optout = optout;
-    _prefs!.setBool(kOptOut, _optout!);
+  void setOptOut(bool optOut) {
+    _optOut = optOut;
+    _prefs!.setBool(kOptOut, _optOut!);
   }
 
   void clear() {
@@ -222,6 +222,7 @@ class MatomoTracker {
     tracker._track(_Event(
       tracker: tracker,
       action: widgetName,
+      userAgent: tracker.userAgent,
     ));
   }
 
@@ -296,7 +297,7 @@ class MatomoTracker {
     log.finest('Processing queue ${_queue.length}');
     while (_queue.length > 0) {
       var event = _queue.removeFirst();
-      if (!_optout!) {
+      if (!_optOut!) {
         _dispatcher.send(event);
       }
     }
@@ -354,6 +355,7 @@ class _Event {
   final num? taxAmount;
   final num? shippingCost;
   final num? discountAmount;
+  final String? userAgent;
 
   late DateTime _date;
 
@@ -372,6 +374,7 @@ class _Event {
     this.taxAmount,
     this.shippingCost,
     this.discountAmount,
+    this.userAgent,
   }) {
     _date = DateTime.now().toUtc();
   }
@@ -462,6 +465,9 @@ class _Event {
     }
     if (discountAmount != null) {
       map['ec_dt'] = discountAmount;
+    }
+    if (userAgent != null) {
+      map['ua'] = userAgent;
     }
 
     return map;
