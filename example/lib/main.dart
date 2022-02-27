@@ -1,5 +1,6 @@
+import 'package:deepcare_matomo/matomo.dart';
 import 'package:flutter/material.dart';
-import 'package:matomo/matomo.dart';
+
 import 'package:logging/logging.dart';
 
 void main() {
@@ -11,8 +12,7 @@ class MyApp extends StatelessWidget {
   MyApp() {
     Logger.root.level = Level.FINEST;
     Logger.root.onRecord.listen((LogRecord rec) {
-      print(
-          '[${rec.time}][${rec.level.name}][${rec.loggerName}] ${rec.message}');
+      print('[${rec.time}][${rec.level.name}][${rec.loggerName}] ${rec.message}');
     });
 
     MatomoTracker().initialize(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
 class Foundation {}
 
 class MyHomePage extends TraceableStatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key, name: title);
+  MyHomePage({Key? key, required this.title}) : super(key: key, name: title);
 
   final String title;
 
