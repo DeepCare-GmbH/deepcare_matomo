@@ -1,3 +1,7 @@
+## [1.1.1] - 2022/02/26
+
+User agent.
+
 ## [1.1.0] - 2021/11/06
 
 * Add ecommerce tracking (Thank you stefan01@)
