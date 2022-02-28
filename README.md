@@ -12,6 +12,12 @@ dependencies:
 As early as possible in your application, you need to configure the Matomo Tracker to pass the URL endpoint of your instance and your Site ID.
 
 ```dart
+
+void main() {
+  
+    // ensureInitialized must be called to ensure user agent detection:
+    WidgetsFlutterBinding.ensureInitialized();
+  
     await MatomoTracker().initialize(
         siteId: siteId,
         url: 'https://example.com/piwik.php',
@@ -36,7 +42,7 @@ For tracking goals and, events call `trackGoal` and `trackEvent` respectively.
 
 A value can be passed for events:
 ```dart
-MatomoTracker().trackEvent('eventName', 'eventAction', eventValue='eventValue');
+MatomoTracker.trackEvent('eventName', 'eventAction', eventValue: 1);
 ```
 
 ## Opting Out
